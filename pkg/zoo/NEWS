@@ -188,6 +188,9 @@ Changes in Version 1.6-3
 
   o new MATCH() method for "times" class.
 
+  o index.column in read.zoo now can specify multiple columns provided FUN
+    is specified consistently
+
 
 Changes in Version 1.6-2
 
@@ -213,6 +216,9 @@ Changes in Version 1.6-0
   o workaround to eliminate as.Date.numeric() warning when zoo loads
 
   o read.zoo() now optionally accepts a data frame for the file argument
+
+  o new function make.unique.approx() for resolving duplicate index values.  
+    Also new make.unique argument to read.zoo().
 
   o better error message in read.zoo() if NAs found in index
 
