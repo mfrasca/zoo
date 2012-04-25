@@ -214,9 +214,9 @@ test.read.zoo.POSIXct <- function() {
 	target <- structure(c(73.8, 73.8, 73.8, 73.8, 73.8, 73.8, 73.7, 73.8, 73.8, 
 	73.8, 73.8, 73.8, 73.8, 73.7, 73.8, 73.8, 73.8, 73.8, 73.8, 73.8, 
 	73.7, 73.8, 73.8, 73.8, 73.8, 73.8, 73.8, 73.7), .Dim = c(7L, 
-	4L), .Dimnames = list(NULL, c("V2", "V3", "V4", "V5")), index = structure(c(1287164634, 
-	1287164655, 1287164751, 1287164781, 1287164847, 1287164874, 1287164991
-	), class = c("POSIXct", "POSIXt"), tzone = ""), class = "zoo")
+	4L), .Dimnames = list(NULL, c("V2", "V3", "V4", "V5")), index = structure(c(1287143034,
+        1287143055, 1287143151, 1287143181, 1287143247, 1287143274, 1287143391),
+        class = c("POSIXct", "POSIXt"), tzone = ""), class = "zoo")
 	checkIdentical(z, target)
 }
 
