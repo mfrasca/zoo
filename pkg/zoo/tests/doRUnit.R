@@ -1,60 +1,29 @@
-#!/usr/bin/Rscript
-## unit tests will not be done if RUnit is not available
-if(require("RUnit", quietly=TRUE)) {
- 
-  ## --- Setup ---
- 
+#! /usr/bin/Rscript
+if(require(svUnit, quietly=TRUE)) {
+
   pkg <- "zoo"
-  if(Sys.getenv("RCMDCHECK") == "FALSE") {
-    ## Path to unit tests for standalone running under Makefile (not R CMD check)
-    ## PKG/tests/../inst/unitTests
-    path <- file.path(getwd(), "..", "inst", "unitTests")
-  } else {
-    ## Path to unit tests for R CMD check
-    ## PKG.Rcheck/tests/../PKG/unitTests
-    path <- system.file(package=pkg, "unitTests")
+  require(zoo)
+
+  unlink("report.xml")  # Make sure we generate a new report
+  mypkgSuite <- svSuiteList(pkg, dirs="../../zoo/inst/unitTests")  # List all our test suites
+  runTest(mypkgSuite, name = pkg)  # Run them...
+  ## makeTestListFromExamples is in svUnit 0.7.8 or more
+  doRunExamples <- TRUE
+  svUnitVersion = as.integer(strsplit(installed.packages()[which(installed.packages()[, 'Package'] == "svUnit"), "Version"], "[\\.-]")[[1]])
+  if (svUnitVersion[1] == 0) {
+    if (svUnitVersion[2] < 7) {
+      doRunExamples <- FALSE
+    } else {
+      if (svUnitVersion[2] == 7)
+        doRunExamples <- svUnitVersion[3] >= 8
+    }
   }
-  cat("\nRunning unit tests\n")
-  print(list(pkg=pkg, getwd=getwd(), pathToUnitTests=path))
- 
-  library(package=pkg, character.only=TRUE)
- 
-  ## If desired, load the name space to allow testing of private functions
-  ## if (is.element(pkg, loadedNamespaces()))
-  ##     attach(loadNamespace(pkg), name=paste("namespace", pkg, sep=":"), pos=3)
-  ##
-  ## or simply call PKG:::myPrivateFunction() in tests
- 
-  ## --- Testing ---
- 
-  ## Define tests
-  testSuite <- defineTestSuite(name=paste(pkg, "unit testing"),
-                                          dirs=path)
-  ## Run
-  tests <- runTestSuite(testSuite)
- 
-  ## Default report name
-  pathReport <- file.path(path, "report")
- 
-  ## Report to stdout and text files
-  cat("------------------- UNIT TEST SUMMARY ---------------------\n\n")
-  printTextProtocol(tests, showDetails=FALSE)
-  printTextProtocol(tests, showDetails=FALSE,
-                    fileName=paste(pathReport, "Summary.txt", sep=""))
-  printTextProtocol(tests, showDetails=TRUE,
-                    fileName=paste(pathReport, ".txt", sep=""))
- 
-  ## Report to HTML file
-  printHTMLProtocol(tests, fileName=paste(pathReport, ".html", sep=""))
- 
-  ## Return stop() to cause R CMD check stop in case of
-  ##  - failures i.e. FALSE to unit tests or
-  ##  - errors i.e. R errors
-  tmp <- getErrors(tests)
-  if(tmp$nFail > 0 | tmp$nErr > 0) {
-    stop(paste("\n\nunit testing failed (#test failures: ", tmp$nFail,
-               ", #R errors: ",  tmp$nErr, ")\n\n", sep=""))
-  }
+  if(doRunExamples)
+    runTest(tryCatch(makeTestListFromExamples(pkg, "../../pkg/man/"), error=function(e) NULL))
+  protocol(Log(), type = "junit", file = "report.xml")  # ... and write report
+
+  errorLog(stopit = TRUE, summarize = FALSE)
+
 } else {
-  warning("cannot run unit tests -- package RUnit is not available")
+  warning("cannot run unit tests -- package svUnit is not available")
 }

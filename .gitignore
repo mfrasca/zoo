@@ -1,3 +1,8 @@
+# R generated files
+*.Rcheck
+pkg/zoo/tests/report.xml
+pkg/zoo/src/symbols.rds
+
 # Compiled Object files
 *.slo
 *.lo
