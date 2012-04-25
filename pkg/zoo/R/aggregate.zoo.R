@@ -24,7 +24,7 @@ aggregate.zoo <- function(x, by, FUN = sum, ..., regular = NULL, frequency = NUL
   
   ## regularity processing, set up return value
   ix <- my.unique(by[[1]])
-  rval <- zoo(df, ix[!is.na(ix)])
+  rval <- zoo(df[!is.na(ix)], ix[!is.na(ix)])
   
   if(regular) {
     freq <- ifelse(is.null(frequency), frequency(rval), frequency)
