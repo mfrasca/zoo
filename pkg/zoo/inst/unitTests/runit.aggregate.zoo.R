@@ -17,7 +17,7 @@
 ## <http://www.gnu.org/licenses/>.
 ##
 
-require(RUnit)
+require(svUnit)
 
 test.aggregate.zoo.factor.ignore.NA <- function() {
   F <- factor(c(rep("a",2), rep(NA,2), rep("b", 2)))

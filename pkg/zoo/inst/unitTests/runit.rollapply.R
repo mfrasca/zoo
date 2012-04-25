@@ -17,7 +17,7 @@
 ## <http://www.gnu.org/licenses/>.
 ##
 
-require(RUnit)
+require(svUnit)
 
 test.rollapply.default <- function() {
   current <- rollapply(c(1,2,3,4), 2, sum)

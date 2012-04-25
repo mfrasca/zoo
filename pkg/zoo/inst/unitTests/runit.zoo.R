@@ -17,7 +17,7 @@
 ## <http://www.gnu.org/licenses/>.
 ##
 
-require(RUnit)
+require(svUnit)
 
 "test.[<-.zoo.full.replacement" <- function() {
   current <- zoo(matrix(1:24, 6))
