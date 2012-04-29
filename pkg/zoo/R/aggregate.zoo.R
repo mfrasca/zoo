@@ -20,11 +20,15 @@ aggregate.zoo <- function(x, by, FUN = sum, ..., regular = NULL, frequency = NUL
   if(length(unique(as.character(df[,1]))) == length(df[,1]))
       row.names(df) <- df[, 1]
   df <- df[, -1]
-  if(is.matrix(x)) df <- as.matrix(df)
   
   ## regularity processing, set up return value
   ix <- my.unique(by[[1]])
-  rval <- zoo(df[!is.na(ix)], ix[!is.na(ix)])
+  if(is.matrix(x)) {
+    df <- as.matrix(df)
+    rval <- zoo(df[!is.na(ix), ], ix[!is.na(ix)])
+  } else {
+    rval <- zoo(df[!is.na(ix)], ix[!is.na(ix)])
+  }
   
   if(regular) {
     freq <- ifelse(is.null(frequency), frequency(rval), frequency)
