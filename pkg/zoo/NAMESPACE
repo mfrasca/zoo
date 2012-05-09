@@ -8,6 +8,7 @@ export(
 ## zoo core functionality
   "zoo",
   "zooreg",
+  "listindex",
   "as.zoo",
   "as.zoo.default",
   "as.zooreg",
@@ -38,6 +39,8 @@ export(
   "coredata.default",
   "coredata<-",
   "frequency<-",
+  "lagts",
+  "leadts",
   "index",
   "index2char",
   "index<-",
@@ -158,6 +161,7 @@ export(
   S3method("index<-", "zoo")
   S3method("is.regular", "zoo")
   S3method("lag", "zoo")
+  S3method("lagts", "zoo")
   S3method("lines", "zoo")
   S3method("llines", "zoo")
   S3method("lpoints", "zoo")
@@ -212,6 +216,7 @@ export(
   S3method("coredata<-", "ts")
   S3method("index", "ts")
   S3method("is.regular", "ts")
+  S3method("lagts", "ts")
   S3method("na.approx", "ts")
   S3method("na.fill", "ts")
   S3method("na.StructTS", "ts")
@@ -292,11 +297,24 @@ export(
   S3method("ORDER", "timeDate")
   S3method("as.zoo", "timeSeries")
 
+## methods for class listindex
+  S3method("c", "listindex")
+  S3method("[", "listindex")
+  S3method("length", "listindex")
+  S3method("ORDER", "listindex")
+  S3method("MATCH", "listindex")
+  S3method("as.numeric", "listindex")
+  S3method("as.vector", "listindex")
+  S3method("as.character", "listindex")
+  S3method("print", "listindex")
+  S3method("xtfrm", "listindex")
+
 ## methods for misc classes
   S3method("index", "default")
   S3method("index2char", "default")
   S3method("is.regular", "default")
   S3method("index2char", "numeric")
+  S3method("lagts", "default")
   S3method("na.contiguous", "data.frame")
   S3method("na.contiguous", "list")
   S3method("rollapply", "default")
